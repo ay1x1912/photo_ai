@@ -1,0 +1,94 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+enum Type{
+  Man
+  Women
+  Other
+}
+
+enum Ethinicity{
+  White
+ Black
+ Asian_American 
+ East_Asian    
+ South_East_Asian
+ South_Asian      
+ Middle_East    
+ Pacific
+ Hispanic
+}
+
+enum EyeColor{
+  Brown
+  Blue
+  Hazel_Green @map("Hazel Green")
+  Gray
+}
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User{
+  id String @id @default(uuid())
+  username String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+model Model{
+  id String @id @default(uuid())
+  userId String
+  name String
+  age Int
+  type Type
+  trigerWord String?
+  tensorPath String?
+  status Status @default(Pending)
+  ethinicity Ethinicity
+  eyeColor EyeColor
+  bold Boolean
+  falAiRequest_id String?
+  zipUrl String
+  outputImage OutputImage[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
+enum Status{
+  Pending 
+  Success
+  Failed
+}
+model OutputImage{
+  id String @id @default(uuid())
+  imageUrl String
+  modelId String
+  userId String
+  falAiRequest_id String?
+  prompt String
+  status Status  @default(Pending)
+  model Model @relation(references: [id],fields: [modelId])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+} 
+
+
+model Pack{
+  id String @id @default(uuid())
+  name String
+  packPrompts PackPrompts[]
+}
+model PackPrompts{
+  id String @id @default(uuid())
+  prompt String
+  packId String
+  pack  Pack @relation(fields: [packId],references: [id])
+}
