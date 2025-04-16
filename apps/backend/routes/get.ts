@@ -1,4 +1,6 @@
+import { auth } from '@repo/common/auth';
 import { prisma } from '@repo/db/prisma';
+import { fromNodeHeaders } from 'better-auth/node';
 import express from 'express'
 const getRouter=express.Router();
 
@@ -20,10 +22,14 @@ getRouter.get('/image/bulk', async(req,res)=>{
     })
 })
 getRouter.get('/pack/bulk',async(req,res)=>{
-    const packs= await prisma.pack.findMany({})
+    const session = await auth.api.getSession({
+        headers: fromNodeHeaders(req.headers),
+      });
+    // const packs= await prisma.pack.findMany({})
     res.json({
-       packs
+       session
     })
 })
 
+ 
 export default getRouter;

@@ -1,7 +1,11 @@
+"use cli"
 import Image, { type ImageProps } from "next/image";
 
 import styles from "./page.module.css";
 import { Button } from "@/components/ui/button";
+import { signOut } from "@/lib/auth-client";
+import SignOut from "@/components/signOutButton";
+
 
 type Props = Omit<ImageProps, "src"> & {
   srcLight: string;
@@ -21,9 +25,13 @@ const ThemeImage = (props: Props) => {
 
 export default function Home() {
   return (
-    <div className="bg-red-400">
+    <div className=" h-screen">
       hello world
-      <Button variant={"ghost"}>hello world</Button>
+    <SignOut/>
+      <div className="m-10">
+      
+
+      </div>
     </div>
   );
 }

@@ -1,11 +1,14 @@
+import MyForm from '@/components/builderForm'
+import { CardWithForm } from '@/components/trainForm'
 import React from 'react'
 
 function TrainPage() {
     return (
-        <div className='flex  flex-col  justify-center items-center h-screen'>
-            Hello from train 
-        </div>
+        <MyForm/>
     )
 }
 
 export default TrainPage
+
+
+

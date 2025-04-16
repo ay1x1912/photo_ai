@@ -11,7 +11,8 @@ trainRouter.post('/ai/train',async (req,res)=>{
  try{
     
 const parseBody= TrainModel.safeParse(req.body) 
-
+console.log(parseBody.error)
+console.log(req.body)
  if(!parseBody.success){
     res.status(411).json({
         msg:"Incorrect Input"
@@ -19,8 +20,9 @@ const parseBody= TrainModel.safeParse(req.body)
     return
  }
  
- const {name,age,type,eyeColor,ethinicity,zipUrl,bold}=parseBody.data
- const request_id = await falModel.trainModel("",name)
+ const {name,age,type,eyeColor,ethnicity,zipUrl}=parseBody.data
+//  const request_id = await falModel.trainModel(zipUrl,name)
+const request_id="hellow rold"
  if(!request_id){
     throw new Error("Fal ai api called failed");
     
@@ -31,9 +33,8 @@ const data=await prisma.model.create({
         age,
         type,
         eyeColor,
-        ethinicity,
+       ethinicity:ethnicity,
         zipUrl,
-        bold,
         userId:"hello",
         falAiRequest_id:request_id
     }
